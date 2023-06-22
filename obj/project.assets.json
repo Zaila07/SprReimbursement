@@ -151,18 +151,19 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Http.Features/2.2.0": {
+      "Microsoft.AspNetCore.Http.Features/5.0.17": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.Primitives": "2.2.0"
+          "Microsoft.Extensions.Primitives": "5.0.1",
+          "System.IO.Pipelines": "5.0.2"
         },
         "compile": {
-          "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.dll": {
+          "lib/net5.0/Microsoft.AspNetCore.Http.Features.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.dll": {
+          "lib/net5.0/Microsoft.AspNetCore.Http.Features.dll": {
             "related": ".xml"
           }
         }
@@ -2967,7 +2968,7 @@
           "lib/netstandard1.3/System.IO.FileSystem.Primitives.dll": {}
         }
       },
-      "System.IO.Pipelines/5.0.1": {
+      "System.IO.Pipelines/5.0.2": {
         "type": "package",
         "compile": {
           "ref/netcoreapp2.0/System.IO.Pipelines.dll": {
@@ -4020,6 +4021,54 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XDocument.dll": {}
         }
+      },
+      "SprEmployeeReimbursement.Business/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Azure.AI.FormRecognizer": "4.0.0",
+          "Microsoft.AspNetCore.Http.Features": "5.0.17",
+          "Microsoft.Extensions.Configuration.Abstractions": "7.0.0",
+          "SprEmployeeReimbursement.Common": "1.0.0",
+          "System.IO": "4.3.0",
+          "System.Threading.Tasks": "4.3.0"
+        },
+        "compile": {
+          "bin/placeholder/SprEmployeeReimbursement.Business.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SprEmployeeReimbursement.Business.dll": {}
+        }
+      },
+      "SprEmployeeReimbursement.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "System.IO": "4.3.0",
+          "System.Threading.Tasks": "4.3.0"
+        },
+        "compile": {
+          "bin/placeholder/SprEmployeeReimbursement.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SprEmployeeReimbursement.Common.dll": {}
+        }
+      },
+      "SprEmployeeReimbursement.DataAccess/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "7.0.4",
+          "SprEmployeeReimbursement.Common": "1.0.0",
+          "System.IO": "4.3.0",
+          "System.Threading.Tasks": "4.3.0"
+        },
+        "compile": {
+          "bin/placeholder/SprEmployeeReimbursement.DataAccess.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SprEmployeeReimbursement.DataAccess.dll": {}
+        }
       }
     }
   },
@@ -4168,16 +4217,22 @@
         "microsoft.aspnetcore.http.abstractions.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Http.Features/2.2.0": {
-      "sha512": "ziFz5zH8f33En4dX81LW84I6XrYXKf9jg6aM39cM+LffN9KJahViKZ61dGMSO2gd3e+qe5yBRwsesvyqlZaSMg==",
+    "Microsoft.AspNetCore.Http.Features/5.0.17": {
+      "sha512": "3jG2xS+dx8DDCGV/F+STdPTg89lX3ao3dF/VEPvJaz3wzBIjuadipTtYNEXDIVuOPZwb6jdmhrX9jkzOIBm5cw==",
       "type": "package",
-      "path": "microsoft.aspnetcore.http.features/2.2.0",
+      "path": "microsoft.aspnetcore.http.features/5.0.17",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net461/Microsoft.AspNetCore.Http.Features.dll",
+        "lib/net461/Microsoft.AspNetCore.Http.Features.xml",
+        "lib/net5.0/Microsoft.AspNetCore.Http.Features.dll",
+        "lib/net5.0/Microsoft.AspNetCore.Http.Features.xml",
         "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.dll",
         "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.xml",
-        "microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
+        "microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
         "microsoft.aspnetcore.http.features.nuspec"
       ]
     },
@@ -8422,10 +8477,10 @@
         "system.io.filesystem.primitives.nuspec"
       ]
     },
-    "System.IO.Pipelines/5.0.1": {
-      "sha512": "qEePWsaq9LoEEIqhbGe6D5J8c9IqQOUuTzzV6wn1POlfdLkJliZY3OlB0j0f17uMWlqZYjH7txj+2YbyrIA8Yg==",
+    "System.IO.Pipelines/5.0.2": {
+      "sha512": "Iew+dfa6FFiyvWBdRmXApixRY1db+beyutpIck4SOSe0NLM8FD/7AD54MscqVLhvfSMLHO7KadjTRT7fqxOGTA==",
       "type": "package",
-      "path": "system.io.pipelines/5.0.1",
+      "path": "system.io.pipelines/5.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -8442,7 +8497,7 @@
         "lib/netstandard2.0/System.IO.Pipelines.xml",
         "ref/netcoreapp2.0/System.IO.Pipelines.dll",
         "ref/netcoreapp2.0/System.IO.Pipelines.xml",
-        "system.io.pipelines.5.0.1.nupkg.sha512",
+        "system.io.pipelines.5.0.2.nupkg.sha512",
         "system.io.pipelines.nuspec",
         "useSharedDesignerContext.txt",
         "version.txt"
@@ -11211,6 +11266,21 @@
         "system.xml.xdocument.4.3.0.nupkg.sha512",
         "system.xml.xdocument.nuspec"
       ]
+    },
+    "SprEmployeeReimbursement.Business/1.0.0": {
+      "type": "project",
+      "path": "../Reimbursement.Business/SprEmployeeReimbursement.Business.csproj",
+      "msbuildProject": "../Reimbursement.Business/SprEmployeeReimbursement.Business.csproj"
+    },
+    "SprEmployeeReimbursement.Common/1.0.0": {
+      "type": "project",
+      "path": "../SprEmployeeReimbursement.Common/SprEmployeeReimbursement.Common.csproj",
+      "msbuildProject": "../SprEmployeeReimbursement.Common/SprEmployeeReimbursement.Common.csproj"
+    },
+    "SprEmployeeReimbursement.DataAccess/1.0.0": {
+      "type": "project",
+      "path": "../SprEmployeeReimbursement.DataAccess/SprEmployeeReimbursement.DataAccess.csproj",
+      "msbuildProject": "../SprEmployeeReimbursement.DataAccess/SprEmployeeReimbursement.DataAccess.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -11224,7 +11294,11 @@
       "Microsoft.Extensions.FileProviders.Physical >= 7.0.0",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 6.0.13",
       "Newtonsoft.Json >= 13.0.3",
-      "Swashbuckle.AspNetCore >= 6.2.3"
+      "SprEmployeeReimbursement.Business >= 1.0.0",
+      "SprEmployeeReimbursement.DataAccess >= 1.0.0",
+      "Swashbuckle.AspNetCore >= 6.2.3",
+      "System.IO >= 4.3.0",
+      "System.Threading.Tasks >= 4.3.0"
     ]
   },
   "packageFolders": {
@@ -11254,7 +11328,14 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\ASUS\\source\\repos\\Reimbursement.Business\\SprEmployeeReimbursement.Business.csproj": {
+              "projectPath": "C:\\Users\\ASUS\\source\\repos\\Reimbursement.Business\\SprEmployeeReimbursement.Business.csproj"
+            },
+            "C:\\Users\\ASUS\\source\\repos\\SprEmployeeReimbursement.DataAccess\\SprEmployeeReimbursement.DataAccess.csproj": {
+              "projectPath": "C:\\Users\\ASUS\\source\\repos\\SprEmployeeReimbursement.DataAccess\\SprEmployeeReimbursement.DataAccess.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -11308,6 +11389,14 @@
           "Swashbuckle.AspNetCore": {
             "target": "Package",
             "version": "[6.2.3, )"
+          },
+          "System.IO": {
+            "target": "Package",
+            "version": "[4.3.0, )"
+          },
+          "System.Threading.Tasks": {
+            "target": "Package",
+            "version": "[4.3.0, )"
           }
         },
         "imports": [

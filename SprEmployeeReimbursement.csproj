@@ -20,10 +20,17 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.13" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="System.IO" Version="4.3.0" />
+    <PackageReference Include="System.Threading.Tasks" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Reimbursement.Business\SprEmployeeReimbursement.Business.csproj" />
+    <ProjectReference Include="..\SprEmployeeReimbursement.DataAccess\SprEmployeeReimbursement.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

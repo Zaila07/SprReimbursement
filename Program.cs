@@ -1,7 +1,7 @@
 using Azure;
 using Azure.AI.FormRecognizer;
 using Microsoft.EntityFrameworkCore;
-using SprEmployeeReimbursement.Models;
+using SprEmployeeReimbursement.DataAccess.SprDbContext;
 using System.Data.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.FileProviders;
@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Http;
 using System.Text.Json.Serialization;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
-
-
+using SprEmployeeReimbursement.Business.ServiceCollection;
+using SprEmployeeReimbursement.Business.FormRecognizer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +42,12 @@ return new FormRecognizerClient(new Uri(endpoint), credentials);
 //Add DbContext
 builder.Services.AddDbContext<SprReimbursementDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection")));
+
+//Add FormRecognizerHelper
+builder.Services.AddScoped<FormRecognizerHelper>();
+
+//Register the IReimbursementService and its Implementation
+builder.Services.AddScoped<IReimbursementService, ReimbursementService>(); 
 
 var app = builder.Build();
 

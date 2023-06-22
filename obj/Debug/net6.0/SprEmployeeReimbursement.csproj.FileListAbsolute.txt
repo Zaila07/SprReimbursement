@@ -295,3 +295,9 @@ C:\Users\ASUS\source\repos\SprEmployeeReimbursement\bin\Debug\net6.0\runtimes\wi
 C:\Users\ASUS\source\repos\SprEmployeeReimbursement\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\ASUS\source\repos\SprEmployeeReimbursement\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 C:\Users\ASUS\source\repos\SprEmployeeReimbursement\bin\Debug\net6.0\SprEmployeeReimbursement.staticwebassets.runtime.json
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement\bin\Debug\net6.0\SprEmployeeReimbursement.Business.dll
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement\bin\Debug\net6.0\SprEmployeeReimbursement.Common.dll
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement\bin\Debug\net6.0\SprEmployeeReimbursement.DataAccess.dll
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement\bin\Debug\net6.0\SprEmployeeReimbursement.Business.pdb
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement\bin\Debug\net6.0\SprEmployeeReimbursement.DataAccess.pdb
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement\bin\Debug\net6.0\SprEmployeeReimbursement.Common.pdb

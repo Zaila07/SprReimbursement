@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Azure;
+﻿using System.Text.RegularExpressions;
 using Azure.AI.FormRecognizer;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SprEmployeeReimbursement.Models;
+using SprEmployeeReimbursement.Business.DataTransferObject;
+using SprEmployeeReimbursement.Business.ServiceCollection;
+
+using SprEmployeeReimbursement.Common.Enums;
+using SprEmployeeReimbursement.DataAccess.Models;
+using SprEmployeeReimbursement.DataAccess.SprDbContext;
 
 namespace SprEmployeeReimbursement.Controllers
 {
@@ -18,16 +16,18 @@ namespace SprEmployeeReimbursement.Controllers
     public class ReimbursementController : ControllerBase
     {
         private readonly IConfiguration _configuration;
+        private readonly IReimbursementService _reimbursementService;
         private readonly FormRecognizerClient _formRecognizerClient;
         private readonly SprReimbursementDbContext _context;
 
 
 
-        public ReimbursementController(IConfiguration configuration, FormRecognizerClient formRecognizerClient, SprReimbursementDbContext context)
+        public ReimbursementController(IConfiguration configuration, FormRecognizerClient formRecognizerClient, SprReimbursementDbContext context, IReimbursementService reimbursementService)
         {
             _context = context;
             _configuration = configuration;
             _formRecognizerClient = formRecognizerClient;
+            _reimbursementService = reimbursementService;
         }
 
 
@@ -36,36 +36,34 @@ namespace SprEmployeeReimbursement.Controllers
         
 
     [HttpPost]
-        public async Task<IActionResult> CreateReimbursement([FromForm] ReimbursementDTO reimbursementDTO)
+        public async Task<IActionResult> CreateReimbursement([FromForm] ReimbursementDto reimbursementDto)
         {
-            try 
-            {
-                if (reimbursementDTO == null || reimbursementDTO.ReceiptImage == null || reimbursementDTO.ReceiptImage.Length == 0)
+            
+                if (reimbursementDto == null || reimbursementDto.ReceiptImage == null || reimbursementDto.ReceiptImage.Length == 0)
                 {
                     return BadRequest("Invalid reimbursement data or receipt iamge.");
                 }
 
-                var receiptText = await ExtractReceiptTextAsync(reimbursementDTO.ReceiptImage);
+                var receiptText = await _reimbursementService.ExtractReceiptTextAsync(reimbursementDto.ReceiptImage); //CS0103
                 var Reimbursement = new ReimbursementModel
                 {
-                    EmployeeId = reimbursementDTO.EmployeeId,
-                    EmployeeName = reimbursementDTO.EmployeeName,
-                    Type = reimbursementDTO.Type,
-                    ReceiptImageUrl = SaveReceiptImage(reimbursementDTO.ReceiptImage),
-                    Amount = (decimal?)(reimbursementDTO.Amount ?? 0),
+                    EmployeeId = reimbursementDto.EmployeeId,
 
-                    TransactionDate = reimbursementDTO.TransactionDate,
-
+                    EmployeeName = reimbursementDto.EmployeeName,
+                    Type = reimbursementDto.Type,
+                    ReceiptImageUrl = _reimbursementService.SaveReceiptImage(reimbursementDto.ReceiptImage),
+                    Amount = (decimal?)(reimbursementDto.Amount ?? 0),
+                    TransactionDate = reimbursementDto.TransactionDate,
                 };
                 _context.ReimbursementModels.Add(Reimbursement);
                 await _context.SaveChangesAsync();
                 return Ok(Reimbursement);
-            }catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError,"An error occured while creating the reimbursement");
-            }
+           
             
         }
+
+        
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetReimbursementById(int id)
         {
@@ -88,7 +86,7 @@ namespace SprEmployeeReimbursement.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateReimbursement(int id, [FromBody] ReimbursementUpdateDTO reimbursementDTO)
+        public async Task<IActionResult> UpdateReimbursement(int id, [FromBody] ReimbursementUpdateDto reimbursementDto)
         {
             try 
             {
@@ -99,35 +97,29 @@ namespace SprEmployeeReimbursement.Controllers
                     return NotFound();
                 }
 
-                if (reimbursementDTO.EmployeeId != null)
+                if (reimbursementDto.EmployeeId != null)
                 { 
-                    reimbursement.EmployeeId = reimbursementDTO.EmployeeId;
+                    reimbursement.EmployeeId = reimbursementDto.EmployeeId;
                 }
                 if (reimbursement.EmployeeName != null)
                 {
-                    reimbursement.EmployeeName = reimbursementDTO.EmployeeName;
+                    reimbursement.EmployeeName = reimbursementDto.EmployeeName;
                 }
-                if(reimbursementDTO.Type !=null)
+                if(reimbursementDto.Type !=null)
                 {
-                    reimbursement.Type = reimbursementDTO.Type.Value;
+                    reimbursement.Type = (ReimbursementType)reimbursementDto.Type.Value;
                 }
-                if (reimbursementDTO.Amount != null)
+                if (reimbursementDto.Amount != null)
                 { 
-                    reimbursement.Amount = reimbursementDTO.Amount.Value;
+                    reimbursement.Amount = reimbursementDto.Amount.Value;
                 }
-                if (reimbursementDTO.TransactionDate != null)
+                if (reimbursementDto.TransactionDate != null)
                 {
 
-                    reimbursement.TransactionDate = reimbursementDTO.TransactionDate.Value;
+                    reimbursement.TransactionDate = reimbursementDto.TransactionDate.Value;
                 }
 
-                //// Update the reimbursement object with the new data
-                //reimbursement.EmployeeId = reimbursementDTO.EmployeeId;
-                //reimbursement.EmployeeName = reimbursementDTO.EmployeeName;
-                //reimbursement.Type = reimbursementDTO.Type;
-                //reimbursement.Amount = reimbursementDTO.Amount;
-                //reimbursement.TransactionDate = reimbursementDTO.TransactionDate;
-
+            
                 _context.ReimbursementModels.Update(reimbursement);
                 await _context.SaveChangesAsync();
 
@@ -155,69 +147,55 @@ namespace SprEmployeeReimbursement.Controllers
             return NoContent();
         }
 
+        [HttpGet("id/totals")]
+        public async Task<IActionResult> GetMonthlyREimbursementTotalById(string id)
+        { 
+            //Get current month and year
+            var currentDate = DateTime.Now;
+            var currentMonth = currentDate.Month;
+            var currentYear = currentDate.Year;
 
+            //Calculate the start and end dates for the currrent month
+            var startDate = new DateTime(currentYear, currentMonth, 1);
+            var endDate = startDate.AddMonths(1).AddDays(1);
 
+            //Query the database to get the reimbursement within the current  for the specified employee Id
+            var reimbursements = await _context.ReimbursementModels
+                .Where(r => r.EmployeeId ==id && r.TransactionDate >=startDate && r.TransactionDate <=endDate)
+                .ToListAsync();
 
-        private async Task<string> ExtractReceiptTextAsync(IFormFile receiptImage)
-        {
-            var formRecognizerOptions = new AzureKeyCredential(_configuration["AzureFormRecognizer:ApiKey"]);
-            var formRecognizerClient = new FormRecognizerClient(new
-                Uri(_configuration["AzureFormRecognizer:Endpoint"]), formRecognizerOptions);
-            using (var stream = receiptImage.OpenReadStream()) 
+            // Calculate the total amount for the employee
+            var totalAmount = reimbursements.Sum(r => r.Amount);
+
+            // Create a new instance of the ReimbursementModel with the total amount
+            var reimbursementModel = new ReimbursementModel
             {
-                var form = await formRecognizerClient.StartRecognizeContentAsync(stream);
-               var operationResult = await form.WaitForCompletionAsync();
-                var formPage = operationResult.Value.FirstOrDefault(); 
-                if (formPage != null)
-                {
-                    var receiptText =string.Join(" ",formPage.Lines
-                        .Select(line => line.Text));
-                    return receiptText;
-                }
-            
-            }
+                EmployeeId = id,
+                MonthlyTotal = totalAmount
+            };
+            return Ok(reimbursementModel);
 
-            return string.Empty;
         }
+ 
+        //private decimal? ParseAmountFromReceiptText(string receiptText)
+        //{
+        //    if (string.IsNullOrEmpty(receiptText))
+        //    {
+        //        return null;
+        //    }
 
-        private string SaveReceiptImage(IFormFile receiptImage)
-        {
-            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
-            var uniqueFileName = Guid.NewGuid().ToString() + "_" + receiptImage.FileName;
-            var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+        //    var keywords = new string[] { "Total", "Amount", "Total Amount", "Amount Due", "Total Due" };
+        //    var lines = receiptText.Split(Environment.NewLine);
+        //    var totalLine = lines.FirstOrDefault(line => keywords.Any(keyword => line.Contains(keyword)));
+        //    var amountString = Regex.Match(totalLine, @"\d+(\.\d+)?").Value;
 
-            //Create the directory if it doesnt exist
-            if (!Directory.Exists(uploadsFolder))
-            { 
-                Directory.CreateDirectory(uploadsFolder);
-            }
+        //    if (decimal.TryParse(amountString, out decimal amount))
+        //    {
+        //        return amount;
+        //    }
 
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                receiptImage.CopyTo(stream);
-            }
-
-            return uniqueFileName;
-        }
-        private decimal? ParseAmountFromReceiptText(string receiptText)
-        {
-            if (string.IsNullOrEmpty(receiptText))
-            {
-                return null;
-            }
-
-            var keywords = new string[] { "Total", "Amount", "Total Amount", "Amount Due", "Total Due" };
-            var lines = receiptText.Split(Environment.NewLine);
-            var totalLine = lines.FirstOrDefault(line => keywords.Any(keyword => line.Contains(keyword)));
-            var amountString = Regex.Match(totalLine, @"\d+(\.\d+)?").Value;
-
-            if (decimal.TryParse(amountString, out decimal amount))
-            {
-                return amount;
-            }
-
-            return null;
-        }
+        //    return null;
+        //}
 
 
     }
