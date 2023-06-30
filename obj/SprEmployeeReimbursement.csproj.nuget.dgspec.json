@@ -30,6 +30,9 @@
             "projectReferences": {
               "C:\\Users\\ASUS\\source\\repos\\SprEmployeeReimbursement.Common\\SprEmployeeReimbursement.Common.csproj": {
                 "projectPath": "C:\\Users\\ASUS\\source\\repos\\SprEmployeeReimbursement.Common\\SprEmployeeReimbursement.Common.csproj"
+              },
+              "C:\\Users\\ASUS\\source\\repos\\SprEmployeeReimbursement.DataAccess\\SprEmployeeReimbursement.DataAccess.csproj": {
+                "projectPath": "C:\\Users\\ASUS\\source\\repos\\SprEmployeeReimbursement.DataAccess\\SprEmployeeReimbursement.DataAccess.csproj"
               }
             }
           }
@@ -55,6 +58,10 @@
             "Microsoft.Extensions.Configuration.Abstractions": {
               "target": "Package",
               "version": "[7.0.0, )"
+            },
+            "System.Collections": {
+              "target": "Package",
+              "version": "[4.3.0, )"
             },
             "System.IO": {
               "target": "Package",
@@ -121,6 +128,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "System.Collections": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
             "System.IO": {
               "target": "Package",
               "version": "[4.3.0, )"
@@ -192,7 +203,19 @@
           "dependencies": {
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[7.0.4, )"
+              "version": "[7.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.Relational": {
+              "target": "Package",
+              "version": "[7.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.8, )"
+            },
+            "System.Collections": {
+              "target": "Package",
+              "version": "[4.3.0, )"
             },
             "System.IO": {
               "target": "Package",
@@ -271,23 +294,19 @@
               "target": "Package",
               "version": "[4.0.0, )"
             },
-            "Microsoft.AspNetCore.Http": {
-              "target": "Package",
-              "version": "[2.2.2, )"
-            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[7.0.4, )"
+              "version": "[7.0.8, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[7.0.4, )"
+              "version": "[7.0.8, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[7.0.4, )"
+              "version": "[7.0.8, )"
             },
             "Microsoft.Extensions.Configuration.Json": {
               "target": "Package",
@@ -297,25 +316,13 @@
               "target": "Package",
               "version": "[7.0.0, )"
             },
-            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
-              "target": "Package",
-              "version": "[6.0.13, )"
-            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.2.3, )"
-            },
-            "System.IO": {
-              "target": "Package",
-              "version": "[4.3.0, )"
-            },
-            "System.Threading.Tasks": {
-              "target": "Package",
-              "version": "[4.3.0, )"
+              "version": "[6.5.0, )"
             }
           },
           "imports": [

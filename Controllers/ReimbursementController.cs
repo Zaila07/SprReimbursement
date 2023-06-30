@@ -28,44 +28,39 @@ namespace SprEmployeeReimbursement.Controllers
             _configuration = configuration;
             _formRecognizerClient = formRecognizerClient;
             _reimbursementService = reimbursementService;
-        }
+        }       
 
-
-
-
-        
-
-    [HttpPost]
-        public async Task<IActionResult> CreateReimbursement([FromForm] ReimbursementDto reimbursementDto)
+        [HttpPost("employee/request")]
+        public async Task<IActionResult> ProcessMultipleReceiptsReimbursement([FromForm] MultipleReceiptsReimbursementDto input)
         {
-            
-                if (reimbursementDto == null || reimbursementDto.ReceiptImage == null || reimbursementDto.ReceiptImage.Length == 0)
+            try
+            {
+                if (input.ReceiptImages == null || !input.ReceiptImages.Any())
                 {
-                    return BadRequest("Invalid reimbursement data or receipt iamge.");
+                    return BadRequest("No receipt images provided.");
                 }
 
-                var receiptText = await _reimbursementService.ExtractReceiptTextAsync(reimbursementDto.ReceiptImage); //CS0103
-                var Reimbursement = new ReimbursementModel
-                {
-                    EmployeeId = reimbursementDto.EmployeeId,
+              
 
-                    EmployeeName = reimbursementDto.EmployeeName,
-                    Type = reimbursementDto.Type,
-                    ReceiptImageUrl = _reimbursementService.SaveReceiptImage(reimbursementDto.ReceiptImage),
-                    Amount = (decimal?)(reimbursementDto.Amount ?? 0),
-                    TransactionDate = reimbursementDto.TransactionDate,
-                };
-                _context.ReimbursementModels.Add(Reimbursement);
-                await _context.SaveChangesAsync();
-                return Ok(Reimbursement);
-           
-            
+                // Call the service method to process the multiple receipts reimbursement
+           decimal totalAmount = await _reimbursementService.ProcessMultipleReceiptsReimbursement(input);
+
+                return Ok(totalAmount);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred.");
+            }
         }
 
-        
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetReimbursementById(int id)
+        [HttpGet("hr/{id}")]
+        public async Task<IActionResult> GetReimbursementForHR(int id)
         {
             var reimbursement = await _context.ReimbursementModels.FindAsync(id);
 
@@ -77,125 +72,84 @@ namespace SprEmployeeReimbursement.Controllers
             return Ok(reimbursement);
         }
 
-        [HttpGet]
+        [HttpGet("hr/view/requests")]
         public async Task<IActionResult> GetAllReimbursements()
         {
-            var reimbursements = await _context.ReimbursementModels.ToListAsync();
-
+           
+            var reimbursements = await _reimbursementService.GetAllReimbursements();
             return Ok(reimbursements);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateReimbursement(int id, [FromBody] ReimbursementUpdateDto reimbursementDto)
         {
-            try 
-            {
-                var reimbursement = await _context.ReimbursementModels.FindAsync(id);
 
-                if (reimbursement == null)
-                {
-                    return NotFound();
-                }
+            var updatedReimbursement = await _reimbursementService.UpdateReimbursement(id, reimbursementDto);
+            if (updatedReimbursement == null)
+             {
+                return null;
+             }
 
-                if (reimbursementDto.EmployeeId != null)
-                { 
-                    reimbursement.EmployeeId = reimbursementDto.EmployeeId;
-                }
-                if (reimbursement.EmployeeName != null)
-                {
-                    reimbursement.EmployeeName = reimbursementDto.EmployeeName;
-                }
-                if(reimbursementDto.Type !=null)
-                {
-                    reimbursement.Type = (ReimbursementType)reimbursementDto.Type.Value;
-                }
-                if (reimbursementDto.Amount != null)
-                { 
-                    reimbursement.Amount = reimbursementDto.Amount.Value;
-                }
-                if (reimbursementDto.TransactionDate != null)
-                {
-
-                    reimbursement.TransactionDate = reimbursementDto.TransactionDate.Value;
-                }
-
-            
-                _context.ReimbursementModels.Update(reimbursement);
-                await _context.SaveChangesAsync();
-
-                return Ok(reimbursement);
-            }catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "An error occured while updating reimbursement");
-            }
+                return Ok(updatedReimbursement);
+           
            
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReimbursement(int id)
         {
-            var reimbursement = await _context.ReimbursementModels.FindAsync(id);
-
-            if (reimbursement == null)
+            try
+            {
+                var deletedReimbursement = await _reimbursementService.DeleteReimbursement(id);
+                return Ok(deletedReimbursement);
+            }
+            catch (InvalidOperationException)
             {
                 return NotFound();
+            
             }
-
-            _context.ReimbursementModels.Remove(reimbursement);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
         }
+        [HttpPost("hr/approve/{id}")]
+        public async Task<IActionResult>ApproveReimbursement(int id)
+        {
+            var reimbursement = await _reimbursementService.ApproveReimbursement(id);
+            return Ok(reimbursement);
 
-        [HttpGet("id/totals")]
+        }
+        [HttpPost("hr/disapprove/{id}")]
+        public async Task<IActionResult> DisapproveReimbursement(int id, [FromBody] string reason)
+        {
+            var reimbursement = await _reimbursementService.DisapproveReimbursement(id,reason);
+            return Ok(reimbursement);
+
+        }
+        [HttpGet("hr/total/employee/reimbursements/{id}")]
         public async Task<IActionResult> GetMonthlyREimbursementTotalById(string id)
-        { 
-            //Get current month and year
-            var currentDate = DateTime.Now;
-            var currentMonth = currentDate.Month;
-            var currentYear = currentDate.Year;
-
-            //Calculate the start and end dates for the currrent month
-            var startDate = new DateTime(currentYear, currentMonth, 1);
-            var endDate = startDate.AddMonths(1).AddDays(1);
-
-            //Query the database to get the reimbursement within the current  for the specified employee Id
-            var reimbursements = await _context.ReimbursementModels
-                .Where(r => r.EmployeeId ==id && r.TransactionDate >=startDate && r.TransactionDate <=endDate)
-                .ToListAsync();
-
-            // Calculate the total amount for the employee
-            var totalAmount = reimbursements.Sum(r => r.Amount);
-
-            // Create a new instance of the ReimbursementModel with the total amount
-            var reimbursementModel = new ReimbursementModel
+        {
+            try
             {
-                EmployeeId = id,
-                MonthlyTotal = totalAmount
-            };
-            return Ok(reimbursementModel);
+                var employeeTotalReimbursement = await _reimbursementService.GetMonthlyReimbursementTotalById(id);
 
+                if (employeeTotalReimbursement == null)
+                {
+                    return NotFound(); 
+                }
+
+                var monthlyReimbursementDto = new MonthlyReimbursementDto
+                {
+                    EmployeeName = employeeTotalReimbursement.EmployeeName,
+                    MonthlyTotal = employeeTotalReimbursement.MonthlyTotal
+                };
+
+                return Ok(monthlyReimbursementDto);
+            }
+            catch (Exception)
+            {
+                return BadRequest("Failed to retrieve monthly reimbursement total");
+            }
         }
- 
-        //private decimal? ParseAmountFromReceiptText(string receiptText)
-        //{
-        //    if (string.IsNullOrEmpty(receiptText))
-        //    {
-        //        return null;
-        //    }
 
-        //    var keywords = new string[] { "Total", "Amount", "Total Amount", "Amount Due", "Total Due" };
-        //    var lines = receiptText.Split(Environment.NewLine);
-        //    var totalLine = lines.FirstOrDefault(line => keywords.Any(keyword => line.Contains(keyword)));
-        //    var amountString = Regex.Match(totalLine, @"\d+(\.\d+)?").Value;
 
-        //    if (decimal.TryParse(amountString, out decimal amount))
-        //    {
-        //        return amount;
-        //    }
-
-        //    return null;
-        //}
 
 
     }
