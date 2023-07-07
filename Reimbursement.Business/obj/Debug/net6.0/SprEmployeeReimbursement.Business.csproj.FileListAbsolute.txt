@@ -1,0 +1,17 @@
+C:\Users\ASUS\source\repos\Reimbursement.Business\obj\Debug\net6.0\SprEmployeeReimbursement.Business.csproj.AssemblyReference.cache
+C:\Users\ASUS\source\repos\Reimbursement.Business\obj\Debug\net6.0\SprEmployeeReimbursement.Business.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ASUS\source\repos\Reimbursement.Business\obj\Debug\net6.0\SprEmployeeReimbursement.Business.AssemblyInfoInputs.cache
+C:\Users\ASUS\source\repos\Reimbursement.Business\obj\Debug\net6.0\SprEmployeeReimbursement.Business.AssemblyInfo.cs
+C:\Users\ASUS\source\repos\Reimbursement.Business\obj\Debug\net6.0\SprEmployeeReimbursement.Business.csproj.CoreCompileInputs.cache
+C:\Users\ASUS\source\repos\Reimbursement.Business\bin\Debug\net6.0\SprEmployeeReimbursement.Business.deps.json
+C:\Users\ASUS\source\repos\Reimbursement.Business\bin\Debug\net6.0\SprEmployeeReimbursement.Business.dll
+C:\Users\ASUS\source\repos\Reimbursement.Business\bin\Debug\net6.0\SprEmployeeReimbursement.Business.pdb
+C:\Users\ASUS\source\repos\Reimbursement.Business\bin\Debug\net6.0\SprEmployeeReimbursement.Common.dll
+C:\Users\ASUS\source\repos\Reimbursement.Business\bin\Debug\net6.0\SprEmployeeReimbursement.DataAccess.dll
+C:\Users\ASUS\source\repos\Reimbursement.Business\bin\Debug\net6.0\SprEmployeeReimbursement.Common.pdb
+C:\Users\ASUS\source\repos\Reimbursement.Business\bin\Debug\net6.0\SprEmployeeReimbursement.DataAccess.pdb
+C:\Users\ASUS\source\repos\Reimbursement.Business\obj\Debug\net6.0\SprEmployeeReimbursement.Business.csproj.CopyComplete
+C:\Users\ASUS\source\repos\Reimbursement.Business\obj\Debug\net6.0\SprEmployeeReimbursement.Business.dll
+C:\Users\ASUS\source\repos\Reimbursement.Business\obj\Debug\net6.0\refint\SprEmployeeReimbursement.Business.dll
+C:\Users\ASUS\source\repos\Reimbursement.Business\obj\Debug\net6.0\SprEmployeeReimbursement.Business.pdb
+C:\Users\ASUS\source\repos\Reimbursement.Business\obj\Debug\net6.0\ref\SprEmployeeReimbursement.Business.dll
