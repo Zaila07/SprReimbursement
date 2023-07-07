@@ -16,7 +16,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SprEmployeeReimbursement.Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SprEmployeeReimbursement.DataAccess", "..\SprEmployeeReimbursement.DataAccess\SprEmployeeReimbursement.DataAccess.csproj", "{5D45EDF9-965C-4D40-8C58-3C38FC99D58E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SprEmployeeReimbursement.Tests", "..\SprEmployeeReimbursement.Tests\SprEmployeeReimbursement.Tests.csproj", "{372A69BE-072F-4DAD-89D7-2729073EE31A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SprEmployeeReimbursement.Tests", "..\SprEmployeeReimbursement.Tests\SprEmployeeReimbursement.Tests.csproj", "{372A69BE-072F-4DAD-89D7-2729073EE31A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

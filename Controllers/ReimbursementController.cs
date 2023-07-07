@@ -78,15 +78,11 @@ namespace SprEmployeeReimbursement.Controllers
 
         }
         [HttpGet("hr/total/employee/reimbursements/{id}")]
-        public async Task<IActionResult> GetMonthlyREimbursementTotalById(string id)
+        public async Task<IActionResult> GetTotalMonthlyReimbursement(string id)
         {
 
-            return Ok(new MonthlyReimbursementDto
-            {
-                EmployeeName = (await _reimbursementService.GetMonthlyReimbursementTotalById(id)).EmployeeName,
-                MonthlyTotal = (await _reimbursementService.GetMonthlyReimbursementTotalById(id)).MonthlyTotal
-            });
-
+            return Ok(await _reimbursementService.GetTotalMonthlyReimbursement(id));
+           
         }
         [HttpGet]
         public async Task<IActionResult> GetReimbursementStatus(int id)
