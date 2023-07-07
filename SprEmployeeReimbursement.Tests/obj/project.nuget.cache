@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "fDeEL+qhk9vZuuZjUDm2KAelQ1zfaD7F7z3um5KXIlntHdbn7B92w8BcMhxbr2yPq5o66bZ07ZfY3R4eZjYFhQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\ASUS\\source\\repos\\SprEmployeeReimbursement.Tests\\SprEmployeeReimbursement.Tests.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ASUS\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\ASUS\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
+    "C:\\Users\\ASUS\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
+    "C:\\Users\\ASUS\\.nuget\\packages\\system.runtime\\4.3.0\\system.runtime.4.3.0.nupkg.sha512"
+  ],
+  "logs": []
+}
