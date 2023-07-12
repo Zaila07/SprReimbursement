@@ -4,10 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SprEmployeeReimbursement.Business.DataTransferObject;
 using SprEmployeeReimbursement.Business.ServiceCollection;
-
-using SprEmployeeReimbursement.Common.Enums;
-using SprEmployeeReimbursement.DataAccess.Models;
 using SprEmployeeReimbursement.DataAccess.SprDbContext;
+using Microsoft.Extensions.Logging;
+
 
 namespace SprEmployeeReimbursement.Controllers
 {
@@ -19,22 +18,23 @@ namespace SprEmployeeReimbursement.Controllers
         private readonly IReimbursementService _reimbursementService;
         private readonly FormRecognizerClient _formRecognizerClient;
         private readonly SprReimbursementDbContext _context;
-
-
-
-        public ReimbursementController(IConfiguration configuration, FormRecognizerClient formRecognizerClient, SprReimbursementDbContext context, IReimbursementService reimbursementService)
+        private readonly ILogger<ReimbursementController> _logger;
+   
+        public ReimbursementController(IConfiguration configuration, FormRecognizerClient formRecognizerClient,
+            SprReimbursementDbContext context, IReimbursementService reimbursementService, ILogger<ReimbursementController> logger)
         {
             _context = context;
             _configuration = configuration;
             _formRecognizerClient = formRecognizerClient;
             _reimbursementService = reimbursementService;
+            _logger = logger;
         }
 
         [HttpPost]
         public async Task<IActionResult> ProcessMultipleReceiptsReimbursement([FromForm] MultipleReceiptsReimbursementDto input)
         {
-            var result = await _reimbursementService.ProcessMultipleReceiptsReimbursement(input);
-            return Created($"api/v1/Reimbursement/{result}", result);
+                var result = await _reimbursementService.ProcessMultipleReceiptsReimbursement(input);
+                return Created($"api/v1/Reimbursement/{result}", result);
         }
 
         [HttpGet("hr/{id}")]
@@ -68,7 +68,6 @@ namespace SprEmployeeReimbursement.Controllers
         {
             var reimbursement = await _reimbursementService.ApproveReimbursement(id);
             return Ok(reimbursement);
-
         }
         [HttpPost("hr/disapprove/{id}")]
         public async Task<IActionResult> DisapproveReimbursement(int id, [FromBody] string reason)
@@ -80,9 +79,7 @@ namespace SprEmployeeReimbursement.Controllers
         [HttpGet("hr/total/employee/reimbursements/{id}")]
         public async Task<IActionResult> GetTotalMonthlyReimbursement(string id)
         {
-
             return Ok(await _reimbursementService.GetTotalMonthlyReimbursement(id));
-
         }
         [HttpGet]
         public async Task<IActionResult> GetReimbursementStatus(int id)
@@ -92,6 +89,5 @@ namespace SprEmployeeReimbursement.Controllers
         }
 
     }
-
 
 }

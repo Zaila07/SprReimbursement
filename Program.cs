@@ -2,19 +2,11 @@ using Azure;
 using Azure.AI.FormRecognizer;
 using Microsoft.EntityFrameworkCore;
 using SprEmployeeReimbursement.DataAccess.SprDbContext;
-using System.Data.Common;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.AspNetCore.Http;
 using System.Text.Json.Serialization;
-using System.Reflection;
-using Microsoft.Extensions.Configuration;
 using SprEmployeeReimbursement.Business.ServiceCollection;
 using SprEmployeeReimbursement.Business.FormRecognizer;
 
 var builder = WebApplication.CreateBuilder(args);
-
-
 
 // Add services to the container.
 builder.Services.AddControllers()
@@ -47,19 +39,32 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection")))
 builder.Services.AddScoped<FormRecognizerHelper>();
 
 //Register the IReimbursementService and its Implementation
-builder.Services.AddScoped<IReimbursementService, ReimbursementService>(); 
+builder.Services.AddScoped<IReimbursementService, ReimbursementService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins("http://localhost:8080")
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+
+    });
+
+});
 
 var app = builder.Build();
-
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+app.UseCors();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
