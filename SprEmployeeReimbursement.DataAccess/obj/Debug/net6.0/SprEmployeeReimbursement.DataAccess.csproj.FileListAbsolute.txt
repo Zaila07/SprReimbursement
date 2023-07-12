@@ -1,0 +1,15 @@
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement.DataAccess\bin\Debug\net6.0\SprEmployeeReimbursement.DataAccess.deps.json
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement.DataAccess\bin\Debug\net6.0\SprEmployeeReimbursement.DataAccess.dll
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement.DataAccess\bin\Debug\net6.0\SprEmployeeReimbursement.DataAccess.pdb
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement.DataAccess\bin\Debug\net6.0\SprEmployeeReimbursement.Common.dll
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement.DataAccess\bin\Debug\net6.0\SprEmployeeReimbursement.Common.pdb
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement.DataAccess\obj\Debug\net6.0\SprEmployeeReimbursement.DataAccess.csproj.AssemblyReference.cache
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement.DataAccess\obj\Debug\net6.0\SprEmployeeReimbursement.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement.DataAccess\obj\Debug\net6.0\SprEmployeeReimbursement.DataAccess.AssemblyInfoInputs.cache
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement.DataAccess\obj\Debug\net6.0\SprEmployeeReimbursement.DataAccess.AssemblyInfo.cs
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement.DataAccess\obj\Debug\net6.0\SprEmployeeReimbursement.DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement.DataAccess\obj\Debug\net6.0\SprEmployeeReimbursement.DataAccess.csproj.CopyComplete
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement.DataAccess\obj\Debug\net6.0\SprEmployeeReimbursement.DataAccess.dll
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement.DataAccess\obj\Debug\net6.0\refint\SprEmployeeReimbursement.DataAccess.dll
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement.DataAccess\obj\Debug\net6.0\SprEmployeeReimbursement.DataAccess.pdb
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement.DataAccess\obj\Debug\net6.0\ref\SprEmployeeReimbursement.DataAccess.dll

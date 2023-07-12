@@ -1,0 +1,12 @@
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement.Tests\bin\Debug\net6.0\SprEmployeeReimbursement.Tests.deps.json
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement.Tests\bin\Debug\net6.0\SprEmployeeReimbursement.Tests.dll
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement.Tests\bin\Debug\net6.0\SprEmployeeReimbursement.Tests.pdb
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement.Tests\obj\Debug\net6.0\SprEmployeeReimbursement.Tests.csproj.AssemblyReference.cache
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement.Tests\obj\Debug\net6.0\SprEmployeeReimbursement.Tests.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement.Tests\obj\Debug\net6.0\SprEmployeeReimbursement.Tests.AssemblyInfoInputs.cache
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement.Tests\obj\Debug\net6.0\SprEmployeeReimbursement.Tests.AssemblyInfo.cs
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement.Tests\obj\Debug\net6.0\SprEmployeeReimbursement.Tests.csproj.CoreCompileInputs.cache
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement.Tests\obj\Debug\net6.0\SprEmployeeReimbursement.Tests.dll
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement.Tests\obj\Debug\net6.0\refint\SprEmployeeReimbursement.Tests.dll
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement.Tests\obj\Debug\net6.0\SprEmployeeReimbursement.Tests.pdb
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement.Tests\obj\Debug\net6.0\ref\SprEmployeeReimbursement.Tests.dll
