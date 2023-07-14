@@ -5,6 +5,13 @@ using SprEmployeeReimbursement.DataAccess.SprDbContext;
 using System.Text.Json.Serialization;
 using SprEmployeeReimbursement.Business.ServiceCollection;
 using SprEmployeeReimbursement.Business.FormRecognizer;
+using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using SprEmployeeReimbursement.Swagger;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +26,32 @@ builder.Services.AddControllers()
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddApiVersioning(options => {
+    options.DefaultApiVersion = new ApiVersion(1, 1);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
+    options.ApiVersionReader = new UrlSegmentApiVersionReader();
+   
+});
 builder.Services.AddSwaggerGen();
+
+//Add  API Versioning
+builder.Services.AddSingleton<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerGenOptions>();
+builder.Services.AddApiVersioning(options=>
+{ 
+    options.AssumeDefaultVersionWhenUnspecified= true;
+    options.DefaultApiVersion=new ApiVersion(1, 0);
+});
+builder.Services.AddVersionedApiExplorer(options=>
+{
+    options.GroupNameFormat = "'v'VVV";
+    options.SubstituteApiVersionInUrl= true;
+
+});
+builder.Services.AddSwaggerGen(options=>
+{
+    options.OperationFilter<SwaggerDefaultValues>();
+});
 
 //Add Azure Form Recognizer Client
 builder.Services.AddSingleton<Azure.AI.FormRecognizer.FormRecognizerClient>(provider =>
@@ -56,6 +88,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+app.UseRouting();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -64,12 +97,23 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseSwagger();
+app.UseSwaggerUI(o =>
+{
+    var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+
+    foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions)
+    {
+        o.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", $"SprEmployeeReimbursement API - {description.GroupName.ToUpper()}");
+    }
+});
+
+
 app.UseCors();
 app.UseHttpsRedirection();
+app.UseRouting();
 app.UseStaticFiles();
 
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

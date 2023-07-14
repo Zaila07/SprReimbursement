@@ -279,3 +279,5 @@ C:\Users\ASUS\source\repos\SprEmployeeReimbursement\obj\Debug\net6.0\refint\SprE
 C:\Users\ASUS\source\repos\SprEmployeeReimbursement\obj\Debug\net6.0\SprEmployeeReimbursement.pdb
 C:\Users\ASUS\source\repos\SprEmployeeReimbursement\obj\Debug\net6.0\SprEmployeeReimbursement.genruntimeconfig.cache
 C:\Users\ASUS\source\repos\SprEmployeeReimbursement\obj\Debug\net6.0\ref\SprEmployeeReimbursement.dll
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.Versioning.dll
+C:\Users\ASUS\source\repos\SprEmployeeReimbursement\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer.dll

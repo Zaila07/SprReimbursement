@@ -55,6 +55,10 @@
               "target": "Package",
               "version": "[5.0.17, )"
             },
+            "Microsoft.AspNetCore.Mvc.ApiExplorer": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.Extensions.Configuration.Abstractions": {
               "target": "Package",
               "version": "[7.0.0, )"
@@ -132,6 +136,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Mvc.ApiExplorer": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.Extensions.Logging": {
               "target": "Package",
               "version": "[7.0.0, )"
@@ -193,9 +201,6 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\ASUS\\source\\repos\\Reimbursement.Business\\SprEmployeeReimbursement.Business.csproj": {
-                "projectPath": "C:\\Users\\ASUS\\source\\repos\\Reimbursement.Business\\SprEmployeeReimbursement.Business.csproj"
-              },
               "C:\\Users\\ASUS\\source\\repos\\SprEmployeeReimbursement.Common\\SprEmployeeReimbursement.Common.csproj": {
                 "projectPath": "C:\\Users\\ASUS\\source\\repos\\SprEmployeeReimbursement.Common\\SprEmployeeReimbursement.Common.csproj"
               }
@@ -212,6 +217,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Mvc.ApiExplorer": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[7.0.9, )"
@@ -309,6 +318,18 @@
               "target": "Package",
               "version": "[4.0.0, )"
             },
+            "Microsoft.AspNetCore.Mvc.ApiExplorer": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.Versioning": {
+              "target": "Package",
+              "version": "[5.1.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer": {
+              "target": "Package",
+              "version": "[5.1.0, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[7.0.9, )"
@@ -337,7 +358,7 @@
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
-              "version": "[6.0.14, )"
+              "version": "[6.0.15, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",

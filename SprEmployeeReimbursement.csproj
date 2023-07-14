@@ -7,7 +7,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Reimbursement.Business\**" />
+    <Compile Remove="SprEmployeeReimbursement.Common\**" />
+    <Compile Remove="SprEmployeeReimbursement.DataAccess\**" />
+    <Compile Remove="SprEmployeeReimbursement.Tests\**" />
+    <Content Remove="Reimbursement.Business\**" />
+    <Content Remove="SprEmployeeReimbursement.Common\**" />
+    <Content Remove="SprEmployeeReimbursement.DataAccess\**" />
+    <Content Remove="SprEmployeeReimbursement.Tests\**" />
+    <EmbeddedResource Remove="Reimbursement.Business\**" />
+    <EmbeddedResource Remove="SprEmployeeReimbursement.Common\**" />
+    <EmbeddedResource Remove="SprEmployeeReimbursement.DataAccess\**" />
+    <EmbeddedResource Remove="SprEmployeeReimbursement.Tests\**" />
+    <None Remove="Reimbursement.Business\**" />
+    <None Remove="SprEmployeeReimbursement.Common\**" />
+    <None Remove="SprEmployeeReimbursement.DataAccess\**" />
+    <None Remove="SprEmployeeReimbursement.Tests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Azure.AI.FormRecognizer" Version="4.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ApiExplorer" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.8">
@@ -17,7 +39,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.14" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.15" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
  </ItemGroup>

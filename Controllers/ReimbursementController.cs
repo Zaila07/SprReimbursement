@@ -1,16 +1,16 @@
-﻿using System.Text.RegularExpressions;
-using Azure.AI.FormRecognizer;
+﻿using Azure.AI.FormRecognizer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SprEmployeeReimbursement.Business.DataTransferObject;
 using SprEmployeeReimbursement.Business.ServiceCollection;
 using SprEmployeeReimbursement.DataAccess.SprDbContext;
-using Microsoft.Extensions.Logging;
-
+using SprEmployeeReimbursement.DataAccess.Models;
+using Microsoft.AspNetCore.Mvc.Versioning;
 
 namespace SprEmployeeReimbursement.Controllers
 {
-    [Route("api/[controller]")]
+    [ApiVersion("1")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class ReimbursementController : ControllerBase
     {
@@ -19,7 +19,7 @@ namespace SprEmployeeReimbursement.Controllers
         private readonly FormRecognizerClient _formRecognizerClient;
         private readonly SprReimbursementDbContext _context;
         private readonly ILogger<ReimbursementController> _logger;
-   
+
         public ReimbursementController(IConfiguration configuration, FormRecognizerClient formRecognizerClient,
             SprReimbursementDbContext context, IReimbursementService reimbursementService, ILogger<ReimbursementController> logger)
         {
@@ -30,46 +30,54 @@ namespace SprEmployeeReimbursement.Controllers
             _logger = logger;
         }
 
+        [ProducesResponseType(typeof(decimal), statusCode: StatusCodes.Status200OK)]
+        [MapToApiVersion("1")]
         [HttpPost]
         public async Task<IActionResult> ProcessMultipleReceiptsReimbursement([FromForm] MultipleReceiptsReimbursementDto input)
         {
-                var result = await _reimbursementService.ProcessMultipleReceiptsReimbursement(input);
-                return Created($"api/v1/Reimbursement/{result}", result);
+            var result = await _reimbursementService.ProcessMultipleReceiptsReimbursement(input);
+            return Created($"api/v1/Reimbursement/{result}", result);
         }
 
+        [ProducesResponseType(typeof(ReimbursementModel), statusCode: StatusCodes.Status200OK)]
         [HttpGet("hr/{id}")]
         public async Task<IActionResult> GetReimbursementForHR(int id)
         {
             return Ok(await _context.ReimbursementModels.FindAsync(id));
         }
 
-        [HttpGet("hr/view/requests")]
+        [ProducesResponseType(typeof(List<ReimbursementModel>), statusCode: StatusCodes.Status200OK)]
+        [HttpGet("All")]
         public async Task<IActionResult> GetAllReimbursements()
         {
             return Ok(await _reimbursementService.GetAllReimbursements());
         }
 
+        [ProducesResponseType(typeof(ReimbursementModel), statusCode: StatusCodes.Status200OK)]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateReimbursement(int id, [FromBody] ReimbursementUpdateDto reimbursementDto)
         {
-           await _reimbursementService.UpdateReimbursement(id, reimbursementDto);
-           return Ok();
+            await _reimbursementService.UpdateReimbursement(id, reimbursementDto);
+            return Ok();
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(int),statusCode:StatusCodes.Status200OK)]
         public async Task<IActionResult> DeleteReimbursement(int id)
-        {   
-                var deletedReimbursement = await _reimbursementService.DeleteReimbursement(id);
-                return Ok(deletedReimbursement);          
+        {
+            var deletedReimbursement = await _reimbursementService.DeleteReimbursement(id);
+            return Ok(deletedReimbursement);
         }
 
         [HttpPost("hr/approve/{id}")]
+        [ProducesResponseType(typeof(ReimbursementModel), statusCode: StatusCodes.Status200OK)]
         public async Task<IActionResult>ApproveReimbursement(int id)
         {
             var reimbursement = await _reimbursementService.ApproveReimbursement(id);
             return Ok(reimbursement);
         }
         [HttpPost("hr/disapprove/{id}")]
+        [ProducesResponseType(typeof(ReimbursementModel), statusCode: StatusCodes.Status200OK)]
         public async Task<IActionResult> DisapproveReimbursement(int id, [FromBody] string reason)
         {
             var reimbursement = await _reimbursementService.DisapproveReimbursement(id,reason);
@@ -77,11 +85,14 @@ namespace SprEmployeeReimbursement.Controllers
 
         }
         [HttpGet("hr/total/employee/reimbursements/{id}")]
+        [ProducesResponseType(typeof(MonthlyReimbursementDto),statusCode:StatusCodes.Status200OK)]
         public async Task<IActionResult> GetTotalMonthlyReimbursement(string id)
         {
             return Ok(await _reimbursementService.GetTotalMonthlyReimbursement(id));
         }
-        [HttpGet]
+   
+        [HttpGet("employee/reimbursement/status")]
+        [ProducesResponseType(typeof(ReimbursementStatusDto),statusCode:StatusCodes.Status200OK)]
         public async Task<IActionResult> GetReimbursementStatus(int id)
         {
             var reimbursementStatus = await _reimbursementService.GetReimbursementStatus(id);
